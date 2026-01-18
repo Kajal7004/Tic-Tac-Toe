@@ -44,7 +44,7 @@ nav ul{
     cursor: pointer;
     display: flex;
     justify-content: center;
-    aligh-items: center;
+    align-items: center;
 }
 
 .box:hover{
