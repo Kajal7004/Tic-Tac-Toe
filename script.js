@@ -4,15 +4,22 @@ let audioTurn = new Audio("ting.mp3")
 let gameover = new Audio("gameover.mp3")
 let turn = "X"
 let isgameover = false
-
+let noOfTurns = 9
 //function change to turn
 const changeTurn = () => {
     return turn === "X"? "0" : "X"
 }
 
 //Function to check for a win
-const checkWin = () => {    
+const checkWin = () => {  
+    noOfTurns--;
+
+    if(noOfTurns <= 0 ){
+           reset.click();
+        }
+    
     let boxtext = document.getElementsByClassName("boxtext");
+   // console.log("text",boxtext);
     let wins = [
       [0, 1, 2, 5, 5, 0],
       [3, 4, 5, 5, 15, 0],
@@ -24,16 +31,23 @@ const checkWin = () => {
       [2, 4, 6, 5, 15, 135],
     ];
     wins.forEach(e => {
+        // console.log("e",e);
+      
         if((boxtext[e[0]].innerText === boxtext[e[1]].innerText) && 
         (boxtext[e[2]].innerText === boxtext[e[1]].innerText) &&
-         (boxtext[e[0]].innerText.trim() !== "")){
+        (boxtext[e[0]].innerText.trim() !== "")){
             document.querySelector('.info').innerText = boxtext[e[0]].innerText + "Won";
             isgameover = true;
-            document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = '200px'
-            document.querySelector('.line').style.transform ="translate(${e[3]}vw, ${e[4]}vw) rotate{(e[5]}vw)"
-            document.querySelector('.line').style.width ="20vw";
 
-         }
+            
+
+            document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = '200px'
+            document.querySelector(".line").style.transform =`translate(${e[3]}vw, ${e[4]}vw) rotate(${e[5]}deg)`;
+            document.querySelector('.line').style.width ="20vw";
+        }
+
+        
+        
         })
 
     }
@@ -44,6 +58,7 @@ let boxes = document.getElementsByClassName("box");
 Array.from(boxes).forEach(element =>{
     let boxtext = element.querySelector('.boxtext');
     element.addEventListener('click',() => {
+
         if(boxtext.innerText === ''){
             boxtext.innerText = turn;
             turn = changeTurn();
@@ -52,7 +67,9 @@ Array.from(boxes).forEach(element =>{
             if(!isgameover){
             document.getElementsByClassName("info")[0].innerText = "turn for" + turn;
             }
+          
         }
+
     })
 })
 
@@ -63,10 +80,16 @@ reset.addEventListener('click' , () =>{
     Array.from(boxtexts).forEach(element => {
         element.innerText=""
     });
+
+    
     turn = "X";
     isgameover = false
+    
     document.querySelector('.line').style.width ="0vw";
     document.getElementsByClassName("info")[0].innerText = "turn for" + turn;
     document.querySelector('.imgbox').getElementsByTagName('img')[0].style.width = '0px'
+
+    
+
 
 })
