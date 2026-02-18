@@ -7,7 +7,7 @@
     padding:0;
 }
 
-nav{
+/* nav{
     background: black;
     color: white;
     height: 75px;
@@ -20,7 +20,7 @@ nav{
 
 nav ul{
     list-style-type:none;
-}
+} */
 
 .gameContainer{
     display: flex;
